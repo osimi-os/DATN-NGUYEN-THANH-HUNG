@@ -1,0 +1,85 @@
+/* CSS of Sidebar.jsx */
+.sidebar {
+  width: 15%;
+  min-width: 180px;
+  max-width: 250px;
+  min-height: 100vh;
+  border: 1.5px solid #d7bbbb;
+  border-top: 0;
+  font-size: max(1vw, 10px);
+  background: #fff;
+  transition: left 0.3s, width 0.3s;
+  position: relative;
+  z-index: 1001;
+}
+
+.sidebar-options {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #d7bbbb;
+  border-right: none;
+  border-left: none;
+  padding: 8px 10px;
+  border-radius: 3px 0px 0px 3px;
+  cursor: pointer;
+}
+
+/* To hightlight active */
+.sidebar-option.active {
+  background-color: #fff0ed;
+}
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: -100vw;
+    top: 0;
+    width: 70vw;
+    max-width: 320px;
+    height: 100vh;
+    background: #fff;
+    z-index: 1001;
+    transition: left 0.3s;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+  .sidebar.sidebar-mobile-visible {
+    left: 0;
+  }
+  .sidebar-close-btn {
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1002;
+  }
+  .sidebar-option p {
+    display: block;
+  }
+  .sidebar-mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: block;
+  }
+}
+@media (min-width: 901px) {
+  .sidebar-close-btn {
+    display: none;
+  }
+}

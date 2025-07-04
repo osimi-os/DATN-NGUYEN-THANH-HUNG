@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* CSS chung cho tất cả element trong file index.html */
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Outfit;
+}
+
+/* CSS cho body element */
+body{
+  min-height: 100vh;
+  background-color: #fcfcfc;
+}
+
+/* CSS cho tag element */
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+/* CSS cho hr element */
+hr{
+  border: none;
+  height: 1px;
+  background-color: #a9a9a9;
+}
+
+/* Container cho toàn bộ layout sau navbar */
+.app-layout {
+  display: flex;
+  height: calc(100vh - 60px); /* Giả sử Navbar cao 60px */
+}
+
+/* Phần chứa nội dung chính */
+.app-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background-color: #f9f9f9; /* hoặc màu nền bạn muốn */
+}
+/* Navbar */
+.navbar {
+  height: 60px;
+  width: 100%;
+  background-color: #8b0000; /* Ví dụ màu đỏ */
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Đẩy nội dung xuống dưới navbar */
+body {
+  padding-top: 60px; /* phải đúng với chiều cao navbar */
+}
+
+/* Bố cục main */
+.app-layout {
+  display: flex;
+  height: calc(100vh - 60px); /* navbar 60px */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #ffffff;
+  border-right: 1px solid #ddd;
+  height: 100%;
+  padding: 16px;
+  position: relative;
+}
+
+/* Nội dung chính */
+.app-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}

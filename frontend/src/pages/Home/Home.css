@@ -1,0 +1,17 @@
+body,
+.home-padding {
+  padding-top: 20px;
+}
+
+body,
+.home-page {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+@media (max-width: 600px) {
+  .home-page {
+    padding: 8px;
+    font-size: 1rem;
+  }
+}

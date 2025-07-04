@@ -1,0 +1,68 @@
+/* CSS of Navbar.css */
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background: #a94442;
+  position: relative;
+  z-index: 1100;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-left: 16px;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.profile {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-left: 8px;
+  margin-right: 16px;
+}
+
+@media (max-width: 900px) {
+  .logo {
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+    margin-right: 4px;
+  }
+}
+
+.navbar .profile {
+  width: 40px;
+}
+
+.navbar-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  margin-right: 8px;
+  cursor: pointer;
+  color: #fff;
+}
+.navbar-menu-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+.navbar-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  margin-left: 8px;
+}
+@media (max-width: 900px) {
+  .navbar-menu-btn {
+    display: inline-block;
+  }
+  .navbar-title {
+    font-size: 1rem;
+    margin-left: 4px;
+  }
+}

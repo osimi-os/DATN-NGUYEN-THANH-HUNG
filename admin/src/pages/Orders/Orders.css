@@ -1,0 +1,109 @@
+.order-container {
+  padding: 20px;
+  background-color: #f8f9fd;
+}
+
+.order-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.order-search {
+  padding: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-table thead {
+  background-color: #eef0f3;
+}
+
+.order-table th,
+.order-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.order-line:hover {
+  background-color: #e9b3b3; /* Ví dụ màu nền nhạt hơn khi hover */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Ví dụ tạo bóng đổ nhẹ */
+}
+
+.customer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-name {
+  font-weight: bold;
+}
+
+.customer-email {
+  font-size: 0.85em;
+  color: gray;
+}
+
+.status-select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.status-select.delivered {
+  background-color: #d1f0d1;
+  color: #256029;
+}
+
+.status-select.food-processing {
+  background-color: #fff5c2;
+  color: #8a6d3b;
+}
+
+.status-select.out-of-delivery {
+  background-color: #d9edf7;
+  color: #31708f;
+}
+
+@media (max-width: 900px) {
+  .order-table {
+    width: 100vw !important;
+    min-width: 0 !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 4px !important;
+    overflow-x: auto;
+    box-sizing: border-box;
+  }
+  .order-table-format,
+  .order-row {
+    font-size: 13px;
+    padding: 4px 2px;
+    min-width: 600px;
+  }
+  .order-filter-bar {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  .edit-form,
+  .edit-modal {
+    width: 95vw !important;
+    min-width: 0 !important;
+    max-width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 auto !important;
+  }
+}

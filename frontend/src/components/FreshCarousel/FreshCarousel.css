@@ -1,0 +1,285 @@
+.fresh-carousel-section {
+  width: 100%;
+  max-width: 1400px;
+  margin: 40px auto 48px auto;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fresh-carousel-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #8b0000;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+.fresh-carousel-list {
+  display: flex;
+  gap: 48px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  min-height: 380px;
+  position: relative;
+}
+.fresh-carousel-item.large {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 8px 32px #00000022;
+  padding: 32px 32px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 320px;
+  max-width: 340px;
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+  z-index: 1;
+}
+.fresh-carousel-item.large img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 24px #00000022;
+}
+.fresh-carousel-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.fresh-carousel-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #c0392b;
+  text-align: center;
+  margin-bottom: 2px;
+}
+.fresh-carousel-price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #8b0000;
+  margin-bottom: 2px;
+}
+.fresh-carousel-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ffb347;
+}
+.fresh-carousel-rating img {
+  width: 28px;
+  height: 28px;
+  margin-right: 2px;
+}
+.fresh-carousel-list.carousel-absolute {
+  position: relative;
+  min-height: 320px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 0 0;
+}
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+.carousel-track {
+  display: flex;
+  height: 100%;
+}
+.fresh-carousel-food-item {
+  flex: 0 0 calc(100% / 5); /* 5 là số card hiển thị */
+  max-width: calc(100% / 5);
+  padding: 10px 8px 12px 8px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px #00000015;
+  background: #fff;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s;
+}
+.food-item-img-container {
+  height: 120px;
+}
+.food-item-image {
+  max-width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+.carousel-anim {
+  /* Xóa position: absolute !important; */
+}
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: #fff;
+  border: 2px solid #ffcc33;
+  color: #8b0000;
+  font-size: 2.2rem;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px #00000022;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.92;
+  outline: none;
+}
+.carousel-btn.prev {
+  left: -56px;
+}
+.carousel-btn.next {
+  right: -56px;
+}
+.carousel-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.carousel-btn:hover:not(:disabled) {
+  background: #ffcc33;
+  color: #fff;
+  border: 2px solid #8b0000;
+}
+/* Responsive: 5 card desktop, 4 card tablet, 2-3 card mobile */
+@media (max-width: 1200px) {
+  .fresh-carousel-food-item {
+    min-width: 195px;
+    max-width: 221px;
+  }
+  .carousel-btn.prev {
+    left: -38px;
+  }
+  .carousel-btn.next {
+    right: -38px;
+  }
+}
+@media (max-width: 900px) {
+  .fresh-carousel-list.carousel-absolute {
+    min-height: 180px;
+    gap: 6px;
+  }
+  .fresh-carousel-food-item {
+    min-width: 143px;
+    max-width: 169px;
+  }
+  .carousel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+  .carousel-btn.prev {
+    left: -22px;
+  }
+  .carousel-btn.next {
+    right: -22px;
+  }
+}
+@media (max-width: 700px) {
+  .fresh-carousel-list.carousel-absolute {
+    min-height: 120px;
+    gap: 2px;
+  }
+  .fresh-carousel-food-item {
+    min-width: 117px;
+    max-width: 130px;
+  }
+  .carousel-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 0.9rem;
+  }
+  .carousel-btn.prev {
+    left: -10px;
+  }
+  .carousel-btn.next {
+    right: -10px;
+  }
+}
+.food-item-name-rating {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0;
+}
+.food-item-name-rating a {
+  display: inline-block;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+}
+.slide-in-right {
+  animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+.slide-out-left {
+  animation: slideOutLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+.slide-in-left {
+  animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+.slide-out-right {
+  animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(120px);
+    opacity: 0.7;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-120px);
+    opacity: 0.7;
+  }
+}
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-120px);
+    opacity: 0.7;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(120px);
+    opacity: 0.7;
+  }
+}

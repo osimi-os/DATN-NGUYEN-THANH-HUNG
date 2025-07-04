@@ -1,0 +1,170 @@
+.notification-user-page {
+  max-width: 700px;
+  margin: 32px auto 0 auto;
+  padding: 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px #0001;
+  min-height: 400px;
+}
+.notification-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+.notification-card {
+  display: flex;
+  align-items: flex-start;
+  background: #faf7f2;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px #0001;
+  margin-bottom: 20px;
+  padding: 16px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, background 0.2s;
+  border: 1px solid #eee;
+}
+.notification-card.unread {
+  background: #fffbe7;
+  border-left: 4px solid #ffcc33;
+}
+.notification-card:hover {
+  box-shadow: 0 4px 16px #0002;
+  background: #fffbe7;
+}
+.notification-card-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+.notification-card-content {
+  flex: 1;
+}
+.notification-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.notification-card-date {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+.notification-card-snippet {
+  color: #333;
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.notification-back-btn {
+  background: #ffcc33;
+  color: #8b0000;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  font-size: 1rem;
+  margin-bottom: 18px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s, color 0.2s;
+}
+.notification-back-btn:hover {
+  background: #8b0000;
+  color: #fff;
+}
+.notification-detail-img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  display: block;
+}
+.notification-detail-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.notification-detail-date {
+  color: #888;
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+.notification-detail-content {
+  font-size: 1.1rem;
+  color: #222;
+  line-height: 1.6;
+}
+@media (max-width: 900px) {
+  .notification-user-page {
+    max-width: 98vw;
+    padding: 8px;
+  }
+  .notification-card-img {
+    width: 60px;
+    height: 60px;
+  }
+  .notification-detail-img {
+    width: 100%;
+    height: auto;
+  }
+}
+@media (max-width: 600px) {
+  .notification-user-page {
+    max-width: 100vw;
+    padding: 4px;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+  }
+  .notification-title {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+  .notification-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px;
+    margin-bottom: 12px;
+  }
+  .notification-card-img {
+    width: 100%;
+    height: 140px;
+    margin: 0 0 8px 0;
+    border-radius: 8px 8px 0 0;
+  }
+  .notification-card-title {
+    font-size: 1rem;
+  }
+  .notification-card-date {
+    font-size: 0.8rem;
+  }
+  .notification-back-btn {
+    width: 100%;
+    padding: 8px 0;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  .notification-detail-img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .notification-detail-title {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+  }
+  .notification-detail-date {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  .notification-detail-content {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+}

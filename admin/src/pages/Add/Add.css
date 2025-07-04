@@ -1,0 +1,135 @@
+/* Form wrapper */
+.add {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+  color: #333;
+}
+
+/* Layout for form sections */
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Image upload */
+.add-img-upload {
+  align-items: center;
+  text-align: center;
+}
+
+.add-img-upload img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  background-color: #f8f8f8;
+  border: 2px dashed #bbb;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Input fields */
+.add-product-name,
+.add-product-description {
+  width: 100%;
+}
+
+.add-product-name input,
+.add-product-description textarea,
+.add-category-price input,
+.add-category-price select {
+  padding: 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+  width: 100%;
+}
+
+.add-product-description textarea {
+  min-height: 140px;
+}
+
+/* Category and price group */
+.add-category-price {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.add-category,
+.add-price {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Submit button */
+.add-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #a12c2c;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-btn:hover {
+  background-color: #891818;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .add {
+    padding: 20px;
+  }
+
+  .add-category-price {
+    flex-direction: column;
+  }
+
+  .add-category,
+  .add-price {
+    min-width: 100%;
+  }
+}
+
+.add-form {
+  width: 450px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  padding: 32px 32px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .add-form {
+    width: 100vw !important;
+    min-width: 0 !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 12px !important;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .add-form input,
+  .add-form textarea,
+  .add-form select,
+  .add-form button {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    font-size: 15px;
+  }
+}
