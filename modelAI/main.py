@@ -16,13 +16,22 @@ app.add_middleware(
 )
 
 # Đường dẫn đến thư mục chứa dữ liệu
-cd = os.getcwd()
-data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
-# Load dữ liệu vào DataFrame từ tệp CSV
-df = pd.read_csv(os.path.join(data_path,'data.csv'))
+data_path = os.path.join(os.getcwd(), 'data')
+print(f"Current working directory: {os.getcwd()}")
+print(f"Data path: {data_path}")
+print(f"Data file exists: {os.path.exists(os.path.join(data_path,'data.csv'))}")
 
-# Khởi tạo hệ thống recommendation nâng cao
-rec_system = AdvancedRecommendationSystem(df)
+# Load dữ liệu vào DataFrame từ tệp CSV
+try:
+    df = pd.read_csv(os.path.join(data_path,'data.csv'))
+    print(f"Data loaded successfully. Shape: {df.shape}")
+    # Khởi tạo hệ thống recommendation nâng cao
+    rec_system = AdvancedRecommendationSystem(df)
+    print("Recommendation system initialized successfully")
+except Exception as e:
+    print(f"Error loading data: {e}")
+    df = None
+    rec_system = None
 
 # Kiểm tra xem máy chủ đã kết nối chưa
 @app.get("/ping")
@@ -35,8 +44,7 @@ async def get_recommendations(item_name: str, user_name: str = "anonymous"):
     print(f"Getting recommendations for item: {item_name}, user: {user_name}")
     
     # Đọc dữ liệu từ tệp CSV mỗi lần có yêu cầu
-    cd = os.getcwd()
-    data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
+    data_path = os.path.join(os.getcwd(), 'data')
     df = pd.read_csv(os.path.join(data_path,'data.csv'))
 
     # Kiểm tra xem mặt hàng có trong dữ liệu không
@@ -60,8 +68,7 @@ async def get_user_behavior_insights(user_name: str):
     print(f"Getting user insights for: {user_name}")
     
     # Đọc dữ liệu từ tệp CSV
-    cd = os.getcwd()
-    data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
+    data_path = os.path.join(os.getcwd(), 'data')
     df = pd.read_csv(os.path.join(data_path,'data.csv'))
 
     # Kiểm tra xem user có trong dữ liệu không
@@ -87,8 +94,7 @@ async def get_content_based_recommendations(item_name: str, n_recommendations: i
     print(f"Getting content-based recommendations for item: {item_name}")
     
     # Đọc dữ liệu từ tệp CSV
-    cd = os.getcwd()
-    data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
+    data_path = os.path.join(os.getcwd(), 'data')
     df = pd.read_csv(os.path.join(data_path,'data.csv'))
 
     # Kiểm tra xem mặt hàng có trong dữ liệu không
@@ -114,8 +120,7 @@ async def get_collaborative_recommendations(user_name: str, n_recommendations: i
     print(f"Getting collaborative recommendations for user: {user_name}")
     
     # Đọc dữ liệu từ tệp CSV
-    cd = os.getcwd()
-    data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
+    data_path = os.path.join(os.getcwd(), 'data')
     df = pd.read_csv(os.path.join(data_path,'data.csv'))
 
     # Kiểm tra xem user có trong dữ liệu không
@@ -146,8 +151,7 @@ async def get_matrix_factorization_recommendations(user_name: str, n_recommendat
     print(f"Getting matrix factorization recommendations for user: {user_name}")
     
     # Đọc dữ liệu từ tệp CSV
-    cd = os.getcwd()
-    data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
+    data_path = os.path.join(os.getcwd(), 'data')
     df = pd.read_csv(os.path.join(data_path,'data.csv'))
 
     # Kiểm tra xem user có trong dữ liệu không
@@ -178,8 +182,7 @@ async def compare_recommendation_algorithms(item_name: str, user_name: str = "an
     print(f"Comparing algorithms for item: {item_name}, user: {user_name}")
     
     # Đọc dữ liệu từ tệp CSV
-    cd = os.getcwd()
-    data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
+    data_path = os.path.join(os.getcwd(), 'data')
     df = pd.read_csv(os.path.join(data_path,'data.csv'))
 
     # Kiểm tra xem mặt hàng có trong dữ liệu không
@@ -214,8 +217,7 @@ async def get_system_statistics():
     print("Getting system statistics")
     
     # Đọc dữ liệu từ tệp CSV
-    cd = os.getcwd()
-    data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
+    data_path = os.path.join(os.getcwd(), 'data')
     df = pd.read_csv(os.path.join(data_path,'data.csv'))
     
     # Tính toán thống kê

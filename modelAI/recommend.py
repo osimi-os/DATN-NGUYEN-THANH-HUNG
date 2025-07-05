@@ -30,44 +30,72 @@ class AdvancedRecommendationSystem:
     
     def _prepare_data(self):
         """Chuẩn bị dữ liệu cho các thuật toán"""
-        # Tạo user-item matrix
-        self.user_item_matrix = self.df.pivot_table(
-            index="User", 
-            columns="Items", 
-            values="Rating", 
-            fill_value=0
-        )
-        
-        # Tính toán similarity matrices
-        self._compute_similarities()
-        
-        # Chuẩn bị TF-IDF cho content-based
-        self._prepare_content_features()
+        try:
+            # Tạo user-item matrix
+            self.user_item_matrix = self.df.pivot_table(
+                index="User", 
+                columns="Items", 
+                values="Rating", 
+                fill_value=0
+            )
+            
+            # Tính toán similarity matrices
+            self._compute_similarities()
+            
+            # Chuẩn bị TF-IDF cho content-based
+            self._prepare_content_features()
+        except Exception as e:
+            print(f"Error preparing data: {e}")
+            # Fallback initialization
+            self.user_item_matrix = pd.DataFrame()
+            self.item_similarity_matrix = np.array([])
+            self.user_similarity_matrix = np.array([])
+            self.tfidf_matrix = None
     
     def _compute_similarities(self):
         """Tính toán ma trận tương đồng"""
-        # Item similarity
-        self.item_similarity_matrix = cosine_similarity(self.user_item_matrix.T)
-        
-        # User similarity  
-        self.user_similarity_matrix = cosine_similarity(self.user_item_matrix)
-        
-        # NMF model cho latent factors
-        self.nmf_model = NMF(n_components=min(20, min(self.user_item_matrix.shape)), random_state=42)
-        self.nmf_model.fit(self.user_item_matrix)
+        try:
+            if self.user_item_matrix is None or self.user_item_matrix.empty:
+                return
+                
+            # Item similarity
+            self.item_similarity_matrix = cosine_similarity(self.user_item_matrix.T)
+            
+            # User similarity  
+            self.user_similarity_matrix = cosine_similarity(self.user_item_matrix)
+            
+            # NMF model cho latent factors
+            n_components = min(20, min(self.user_item_matrix.shape))
+            self.nmf_model = NMF(n_components=int(n_components), random_state=42)
+            self.nmf_model.fit(self.user_item_matrix)
+        except Exception as e:
+            print(f"Error computing similarities: {e}")
+            self.item_similarity_matrix = np.array([])
+            self.user_similarity_matrix = np.array([])
+            self.nmf_model = None
     
     def _prepare_content_features(self):
         """Chuẩn bị features cho content-based filtering"""
-        # Tạo description từ category và daypart
-        self.df['Description'] = self.df['Category'] + ' ' + self.df['Daypart'] + ' ' + self.df['Daytype']
-        
-        # TF-IDF vectorization
-        tfidf = TfidfVectorizer(stop_words='english', max_features=1000)
-        self.tfidf_matrix = tfidf.fit_transform(self.df['Description'].fillna(''))
+        try:
+            if self.df is None or self.df.empty:
+                return
+                
+            # Tạo description từ category và daypart
+            self.df['Description'] = self.df['Category'] + ' ' + self.df['Daypart'] + ' ' + self.df['DayType']
+            
+            # TF-IDF vectorization
+            tfidf = TfidfVectorizer(stop_words='english', max_features=1000)
+            self.tfidf_matrix = tfidf.fit_transform(self.df['Description'].fillna(''))
+        except Exception as e:
+            print(f"Error preparing content features: {e}")
+            self.tfidf_matrix = None
     
     def content_based_recommendations(self, item_name, n_recommendations=10):
         """Content-based filtering dựa trên đặc tính sản phẩm"""
         try:
+            if self.tfidf_matrix is None or self.df is None:
+                return []
+                
             # Tìm item trong dataset
             item_data = self.df[self.df['Items'] == item_name]
             if item_data.empty:
@@ -85,13 +113,15 @@ class AdvancedRecommendationSystem:
             similar_items = self.df.iloc[similar_indices]['Items'].unique()
             
             return [item for item in similar_items if item != item_name]
-        except:
+        except Exception as e:
+            print(f"Error in content-based recommendations: {e}")
             return []
     
     def collaborative_filtering_recommendations(self, user_name, n_recommendations=10):
         """Collaborative filtering dựa trên hành vi người dùng"""
         try:
-            if user_name not in self.user_item_matrix.index:
+            if (self.user_item_matrix is None or self.user_similarity_matrix is None or 
+                user_name not in self.user_item_matrix.index):
                 return []
             
             # Lấy user vector
@@ -119,19 +149,22 @@ class AdvancedRecommendationSystem:
             # Sắp xếp và trả về top recommendations
             sorted_recommendations = sorted(recommendations.items(), key=lambda x: x[1], reverse=True)
             return [item for item, score in sorted_recommendations[:n_recommendations]]
-        except:
+        except Exception as e:
+            print(f"Error in collaborative filtering: {e}")
             return []
     
     def matrix_factorization_recommendations(self, user_name, n_recommendations=10):
         """Matrix factorization sử dụng NMF"""
         try:
-            if user_name not in self.user_item_matrix.index:
+            if (self.user_item_matrix is None or self.nmf_model is None or 
+                user_name not in self.user_item_matrix.index):
                 return []
             
             user_idx = self.user_item_matrix.index.get_loc(user_name)
             
             # Transform user vector
-            user_factors = self.nmf_model.transform(self.user_item_matrix.iloc[user_idx:user_idx+1])
+            user_slice = self.user_item_matrix.iloc[user_idx:user_idx+1]
+            user_factors = self.nmf_model.transform(user_slice)
             
             # Reconstruct ratings
             predicted_ratings = np.dot(user_factors, self.nmf_model.components_)[0]
@@ -145,7 +178,8 @@ class AdvancedRecommendationSystem:
             item_scores.sort(key=lambda x: x[1], reverse=True)
             
             return [item for item, score in item_scores[:n_recommendations]]
-        except:
+        except Exception as e:
+            print(f"Error in matrix factorization: {e}")
             return []
     
     def hybrid_recommendations(self, item_name, user_name, n_recommendations=10):
@@ -176,7 +210,8 @@ class AdvancedRecommendationSystem:
     def item_based_collaborative_filtering(self, item_name, n_recommendations=10):
         """Item-based collaborative filtering"""
         try:
-            if item_name not in self.user_item_matrix.columns:
+            if (self.user_item_matrix is None or self.item_similarity_matrix is None or
+                item_name not in self.user_item_matrix.columns):
                 return []
             
             item_idx = self.user_item_matrix.columns.get_loc(item_name)
@@ -187,33 +222,39 @@ class AdvancedRecommendationSystem:
             similar_items = self.user_item_matrix.columns[similar_indices]
             
             return [item for item in similar_items if item != item_name]
-        except:
+        except Exception as e:
+            print(f"Error in item-based collaborative filtering: {e}")
             return []
     
     def get_user_behavior_insights(self, user_name):
         """Phân tích hành vi người dùng"""
-        if user_name not in self.user_item_matrix.index:
+        try:
+            if (self.user_item_matrix is None or 
+                user_name not in self.user_item_matrix.index):
+                return {}
+            
+            user_vector = self.user_item_matrix.loc[user_name]
+            rated_items = user_vector[user_vector > 0]
+            
+            if len(rated_items) == 0:
+                return {}
+            
+            # Phân tích preferences
+            user_items = self.df[self.df['Items'].isin(rated_items.index)]
+            
+            insights = {
+                'total_ratings': len(rated_items),
+                'avg_rating': rated_items.mean(),
+                'preferred_categories': user_items['Category'].value_counts().to_dict(),
+                'preferred_dayparts': user_items['Daypart'].value_counts().to_dict(),
+                'preferred_daytypes': user_items['DayType'].value_counts().to_dict(),
+                'rating_distribution': rated_items.value_counts().to_dict()
+            }
+            
+            return insights
+        except Exception as e:
+            print(f"Error getting user insights: {e}")
             return {}
-        
-        user_vector = self.user_item_matrix.loc[user_name]
-        rated_items = user_vector[user_vector > 0]
-        
-        if len(rated_items) == 0:
-            return {}
-        
-        # Phân tích preferences
-        user_items = self.df[self.df['Items'].isin(rated_items.index)]
-        
-        insights = {
-            'total_ratings': len(rated_items),
-            'avg_rating': rated_items.mean(),
-            'preferred_categories': user_items['Category'].value_counts().to_dict(),
-            'preferred_dayparts': user_items['Daypart'].value_counts().to_dict(),
-            'preferred_daytypes': user_items['Daytype'].value_counts().to_dict(),
-            'rating_distribution': rated_items.value_counts().to_dict()
-        }
-        
-        return insights
 
 # Hàm tính toán gợi ý dựa trên nội dung sản phẩm (giữ lại cho backward compatibility)
 def content_based(item, df):
@@ -284,14 +325,18 @@ def predict_rating(random_user, df):
     final_df = items_bought_df[items_bought_df.index.isin(users_same_items)]
     
     corr_df = final_df.T.corr().unstack().sort_values().drop_duplicates()
-    corr_df = pd.DataFrame(corr_df, columns=["corr"])
+    corr_df = pd.DataFrame(corr_df)
+    corr_df.columns = ["corr"]
     corr_df.index.names = ['user_1', 'user_2']
     corr_df = corr_df.reset_index()
 
     top_users = corr_df[(corr_df["user_1"] == random_user) & (corr_df["corr"] >= 0.3)][
         ["user_2", "corr"]].reset_index(drop=True)
 
-    top_users = top_users.sort_values(by='corr', ascending=False)
+    if not top_users.empty:
+        top_users = top_users.sort_values(by='corr', ascending=False)
+    else:
+        top_users = pd.DataFrame(columns=["user_2", "corr"])
     top_users.rename(columns={"user_2": "User"}, inplace=True)
     top_users_ratings = top_users.merge(df[["User", "Items", "Rating"]], how='inner')
     top_users_ratings = top_users_ratings[top_users_ratings["User"] != random_user]
@@ -299,7 +344,7 @@ def predict_rating(random_user, df):
     top_users_ratings['weighted_rating'] = top_users_ratings['corr'] * top_users_ratings['Rating']
     top_users_ratings.groupby('Items').agg({"weighted_rating": "mean"})
 
-    predict1 = pd.DataFrame(columns=['Items', 'Rating'])
+    predict1 = pd.DataFrame()
     predict1['Items'] = top_users_ratings['Items']
     predict1['Rating'] = top_users_ratings['weighted_rating'] 
     return predict1
@@ -309,11 +354,15 @@ def CollaborativeFiltering(item, user, df):
   recommendation_df = predict_rating(user, df)
   recommendation_df = recommendation_df.reset_index()
 
-  items_to_be_recommend = recommendation_df[recommendation_df["Rating"] > 1].sort_values("Rating", ascending=False)
+  filtered_df = recommendation_df[recommendation_df["Rating"] > 1]
+  if not filtered_df.empty:
+      items_to_be_recommend = filtered_df.sort_values("Rating", ascending=False)
+  else:
+      items_to_be_recommend = pd.DataFrame(columns=["Items", "Rating"])
  
   moveis_from_item_based = item_based(item, df)
 
-  recommend_list = items_to_be_recommend[:10]['Items'].to_list() + moveis_from_item_based
+  recommend_list = items_to_be_recommend[:10]['Items'].tolist() + moveis_from_item_based
   recommend_list = list(set(recommend_list))[:10]
   recommend_list = sorted(recommend_list, key=lambda x: random.random())
   return recommend_list
@@ -352,9 +401,9 @@ def get_user_insights(user, df):
 
 # Test và demo
 if __name__ == "__main__":
-cd = os.getcwd()
-data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
-df = pd.read_csv(os.path.join(data_path, 'data.csv')) 
+    cd = os.getcwd()
+    data_path = os.path.join(os.path.dirname(cd), 'modelAI\\data')
+    df = pd.read_csv(os.path.join(data_path, 'data.csv')) 
     
     # Test với user có nhiều dữ liệu
     test_user = 'Adam'
